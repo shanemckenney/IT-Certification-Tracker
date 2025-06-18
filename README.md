@@ -69,7 +69,10 @@ Adds a “Instructor Tools” menu with:
 
 ## Screenshots
 
-_Add sanitized visuals here to show the dashboard, sheet layout, and menu options._
+![Dashboard Preview](screenshots/Dashboard.png)
+![Dashboard Preview](screenshots/Instructor-Tools-Menu.png)
+![Dashboard Preview](screenshots/Sheet-Layout.png)
+
 
 ---
 
