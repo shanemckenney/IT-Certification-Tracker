@@ -70,8 +70,13 @@ Adds a “Instructor Tools” menu with:
 ## Screenshots
 
 ![Dashboard Preview](Screenshots/Dashboard.png)
+Live dashboard view showing real-time pass rates, certification completion stats, and third-attempt alerts across all students.
+
 ![Dashboard Preview](Screenshots/Instructor-Tools-Menu.png)
+Custom “Instructor Tools” menu with one-click access to automation scripts for calendar events, passed attempt blackout, and per-certification sheets.
+
 ![Dashboard Preview](Screenshots/Sheet-Layout.png)
+Main tracker layout with structured input for up to 3 exam attempts per certification, built-in validations, and color-coded result fields.
 
 
 ---
