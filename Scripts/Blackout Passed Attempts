@@ -1,0 +1,55 @@
+function blackoutPassedAttempts() {
+  const sheetName = "Master Tracker";
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
+  if (!sheet) {
+    SpreadsheetApp.getUi().alert(`❌ Sheet "${sheetName}" not found.`);
+    return;
+  }
+
+  const data = sheet.getDataRange().getValues();
+  const numRows = data.length;
+
+  // Config: exam → { resultCols, rangeStart, rangeEnd }
+  const examConfigs = {
+    "A+ Core 1":    { resultCols: [11, 16, 22], rangeStart: 11, rangeEnd: 23 },
+    "A+ Core 2":    { resultCols: [27, 32, 38], rangeStart: 27, rangeEnd: 39 },
+    "Network+":     { resultCols: [43, 48, 54], rangeStart: 43, rangeEnd: 55 },
+    "Security+":    { resultCols: [59, 64, 70], rangeStart: 59, rangeEnd: 71 },
+    "CySA+":        { resultCols: [75, 80, 86], rangeStart: 75, rangeEnd: 87 }
+  };
+
+  const black = "#000000";
+  const green = "#c6efce";
+
+  let updates = 0;
+
+  for (let row = 1; row < numRows; row++) {
+    for (let exam in examConfigs) {
+      const { resultCols, rangeStart, rangeEnd } = examConfigs[exam];
+
+      for (let i = 0; i < resultCols.length; i++) {
+        const resultCol = resultCols[i];
+        const resultVal = data[row][resultCol - 1];
+
+        if (String(resultVal).toLowerCase() === "pass") {
+          // ✅ Color passed cell green
+          sheet.getRange(row + 1, resultCol).setBackground(green);
+
+          // ⬛ Blackout all columns after the "Pass" cell in that exam's block
+          const blackoutStart = resultCol + 1;
+          if (blackoutStart <= rangeEnd) {
+            const width = rangeEnd - blackoutStart + 1;
+            const rangeToClear = sheet.getRange(row + 1, blackoutStart, 1, width);
+            rangeToClear.clearContent().setBackground(black);
+            Logger.log(`Row ${row + 1}: Blacked out cols ${blackoutStart}-${rangeEnd} (${exam})`);
+            updates++;
+          }
+
+          break; // Only one pass per exam
+        }
+      }
+    }
+  }
+
+  SpreadsheetApp.getUi().alert(`✅ Blackout complete. ${updates} row(s) updated.`);
+}
