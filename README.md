@@ -1,83 +1,86 @@
-# IT-Certification-Tracker
+# IT Certification Tracker for Instructors  
+A Google Sheets + Apps Script Solution
 
-Built using Google Sheets and Apps Script, this project provides streamlined tracking, visual reporting, calendar automation, and instructor tools for bootcamp environments like the Cyber Warrior Program (CWP).
+This project was developed during my time as an instructor and mentor in the **Cyber Warrior Program (CWP)** at [MyComputerCareer](https://www.mycomputercareer.edu) — a career-focused technical training institution that equips students with both the certifications *and the real-world skills* needed to succeed in IT and cybersecurity roles.
 
-## **Features**
+The CWP is not a typical bootcamp. It’s a structured, immersive training experience built to prepare students for real-world challenges, not just exams. Students pursue certifications such as **CompTIA A+, Network+, Security+, and CySA+** while developing the practical knowledge needed to apply those skills in live environments.
 
-- Interactive Dashboard
-   - Live stats per certification (pass percentage, total passed, third attempt list)
-   - Visual color-coded status blocks
-   - Highlights students who have completed all certifications
+---
 
-- Calendar Integration
-   - Automatically creates Google Calendar events from exam date/time cells
-   - Events are scheduled for 90 minutes and include popup and email reminders
-   - Skips events scheduled in the past
+## About This Project
 
-- Blackout Logic for "Pass"
-   - When a student passes an attempt, remaining attempts for that certification are blacked out to prevent         accidental input
-   - Provides clear visual feedback using formatting
+This tracker was built to address the growing challenges of managing certification attempts, reporting metrics, and supporting student success across multiple exams and cohorts. While it started from a helpful base sheet shared by a fellow instructor (shoutout to Desmond), it quickly evolved into a full solution that saves **10+ hours per course cycle**, reduces errors, and improves student oversight.
 
-- Per-Certification Sheet Generation
-    - Automatically creates dedicated, trimmed, and well-formatted sheets for each certification (e.g., A+ Core       1, Network+, etc)
-    - Preserves formatting from the main tracker
-    - Limits display to the top 24 student rows for clarity
+### Pain Points Addressed:
+- High risk of human error from manually tracking exam attempts and outcomes  
+- No centralized agenda view to monitor exam days or know when to expect student results  
+- Manual reporting burdens, especially when sharing updates with school leadership  
+- Lack of clean metrics to track performance across students, certifications, and attempts
 
-- Custom Instructor Menu
-    - Adds a "CWP Tools" menu with options to:
-        - Create Calendar Events
-        - Blackout Passed Attempts
-        - Build Exam-Specific Sheets
+### The Solution:
+Using **Google Sheets and Google Apps Script**, I engineered a system that:
+- Automates data tracking and formatting across 5 certifications and 3 attempts per student
+- Builds real-time dashboards for pass rates, completions, and third-attempt alerts
+- Offers one-click calendar event creation, ensuring exam days are visible on Google Calendar
+- Generates per-certification student sheets for focused analysis and administrative sharing
+- Integrates a custom "CWP Tools" menu for instructors to manage everything in a few clicks
+
+This solution has been fully sanitized and made FERPA-compliant for public use. It’s designed to be immediately useful for any career training program that tracks multiple certification pathways.
+
+---
+
+## Features
+
+### Interactive Dashboard
+- Live stats per certification (pass %, total passes, 3rd attempt alerts)
+- Color-coded status indicators
+- Highlights students who’ve completed all certifications
+
+### Calendar Integration
+- Automatically creates Google Calendar events based on sheet entries
+- 90-minute events with email and popup reminders
+- Ignores past dates to prevent clutter
+
+### Blackout Logic for Passed Exams
+- Automatically grays out remaining attempts after a pass
+- Prevents accidental overwrites and improves data reliability
+
+### Per-Certification Sheet Generation
+- One-click export of trimmed sheets for each cert (A+, Net+, etc.)
+- Retains formatting from master sheet
+
+### Custom Instructor Menu
+Adds a “Instructor Tools” menu with:
+- Blackout Passed Attempts  
+- Create Calendar Events  
+- Build Per-Certification Sheets  
+
+---
 
 ## Setup Instructions
 
-- Make a copy of the sanitized template Google Sheet (link coming soon)
-- Open Extensions > Apps Script
-- Replace any existing code with the scripts found in the /scripts folder
-- Run onOpen() once to activate the CWP Tools menu
+1. Make a copy of the sanitized Google Sheets template (https://docs.google.com/spreadsheets/d/1QS6Ucy7CCDLJIYxjANq0xlJB4V3htEIIspRqs7RXcA0/edit?usp=sharing)  
+2. Open **Extensions > Apps Script**  
+3. Replace any code with the scripts from the `/scripts` folder  
+4. Run the `onOpen()` function once to activate the custom menu  
+5. Use the “CWP Tools” menu for automations and tracking
 
-- Use the custom menu to:
-    - Generate per-certification sheets
-    - Create calendar events based on scheduled exam entries
-    - Apply blackout formatting based on passed attempts
+---
 
 ## Screenshots
 
+_Add sanitized visuals here to show the dashboard, sheet layout, and menu options._
 
+---
 
 ## FERPA Compliance
 
-This repository contains only placeholder data (e.g., "Student 01") and no personally identifiable student information.
+This repository includes no real student data.  
+- Student names have been replaced with placeholders  
+- All screenshots and templates are fully sanitized  
+- Safe for public use and academic sharing
 
-The included template sheet and screenshots are fully sanitized and safe for public sharing.
+---
 
 ## Repository Structure
 
-CWP-Certification-Tracker/
-├── /screenshots
-│   └── dashboard-preview.png
-├── /scripts
-│   ├── blackoutPassedAttempts.js
-│   ├── createCalendarEvents.js
-│   ├── buildFormattedExamSheets.js
-│   └── onOpen.js
-├── /template
-│   └── [Google Sheet Link Here]
-├── README.md
-└── LICENSE
-
-## Intended Audience
-
-- IT certification instructors
-- Career school training coordinators
-- Academic support staff responsible for student certification pipelines
-
-## Technical Overview
-
-- Google Sheets
-- Google Apps Script
-- Google Calendar API (for event automation)
-
-## License
-
-MIT License
