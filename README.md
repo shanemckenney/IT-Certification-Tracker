@@ -87,7 +87,6 @@ Adds a “Instructor Tools” menu with:
 
   *Main tracker layout with structured input for up to 3 exam attempts per certification, built-in validations, and color-coded result fields.*
 
-
 ---
 
 ## FERPA Compliance
@@ -99,5 +98,35 @@ This repository includes no real student data.
 
 ---
 
-## Repository Structure
+## Intended Audience
+
+- IT Certification Instructors  
+- Academic Coordinators  
+- Career Program Admins  
+- Anyone tracking multiple cert attempts across cohorts
+
+---
+
+## Technical Overview
+
+- Google Sheets  
+- Google Apps Script  
+- Google Calendar API
+
+This project showcases skills in:
+- Solution architecture and automation  
+- Custom menu and UI scripting  
+- Data validation and error handling  
+- Visual reporting and stakeholder communication
+
+---
+
+## License
+
+[MIT License](LICENSE)
+
+---
+
+Want help customizing this for your own institution or students? Feel free to fork the project or open an issue.
+
 
