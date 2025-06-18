@@ -1,0 +1,94 @@
+function onOpen() {
+  const ui = SpreadsheetApp.getUi();
+  ui.createMenu("Instructor Tools")
+    .addItem("Create Calendar Events", "createCalendarEvents")
+    .addToUi();
+}
+
+function createCalendarEvents() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Master Tracker");
+  const calendar = CalendarApp.getDefaultCalendar;
+  const timezone = SpreadsheetApp.getActive().getSpreadsheetTimeZone();
+
+  const certMap = {
+    "A+ Core 1": [[8, 9], [13, 14], [18, 19]],
+    "A+ Core 2": [[24, 25], [29, 30], [34, 35]],
+    "Network+": [[40, 41], [46, 47], [50, 51]],
+    "Security+": [[56, 57], [61, 62], [66, 67]],
+    "CySA+": [[72, 73], [77, 78], [82, 83]]
+  };
+
+  const data = sheet.getDataRange().getValues();
+  const now = new Date();
+
+  for (let row = 1; row < data.length; row++) {
+    const studentName = data[row][0]; // Column A
+    if (!studentName) continue;
+
+    for (let cert in certMap) {
+      certMap[cert].forEach((pair, attemptIdx) => {
+        const [dateCol, timeCol] = pair;
+
+        const dateVal = data[row][dateCol - 1];
+        const timeVal = data[row][timeCol - 1];
+
+        if (!dateVal || !timeVal) return;
+
+        let hours = 0;
+        let minutes = 0;
+
+        if (timeVal instanceof Date) {
+          hours = timeVal.getHours();
+          minutes = timeVal.getMinutes();
+        } else if (typeof timeVal === "number") {
+          hours = Math.floor(timeVal * 24);
+          minutes = Math.round((timeVal * 24 - hours) * 60);
+        } else {
+          Logger.log(`❌ Row ${row + 1}, ${cert}: Unsupported time format`);
+          return;
+        }
+
+        const year = new Date(dateVal).getFullYear();
+        const month = new Date(dateVal).getMonth();
+        const day = new Date(dateVal).getDate();
+
+        // Build full datetime string and format with time zone
+        const startString = `${year}-${pad(month + 1)}-${pad(day)} ${pad(hours)}:${pad(minutes)}:00`;
+        const localFormatted = Utilities.formatDate(new Date(startString), timezone, "yyyy-MM-dd'T'HH:mm:ss");
+        const examDateTime = new Date(localFormatted);
+        const endDateTime = new Date(examDateTime);
+        endDateTime.setMinutes(endDateTime.getMinutes() + 90);
+
+
+        if (examDateTime <= now) {
+          Logger.log(`⏩ Skipping past event for ${studentName} on ${examDateTime}`);
+          return;
+        }
+
+        const title = `${studentName} – ${cert} Exam (Attempt ${attemptIdx + 1})`;
+        const description = `✅ Auto-generated from CWP Certification Tracker`;
+
+        const existing = calendar.getEvents(examDateTime, endDateTime, { search: studentName });
+        if (existing.length === 0) {
+          const event = calendar.createEvent(title, examDateTime, endDateTime, {
+  description: description
+});
+
+// Add popup and email reminders
+event.addPopupReminder(10);     // 10 minutes before
+event.addPopupReminder(60);     // 1 hour before
+          Logger.log(`✅ Event created: ${title} at ${examDateTime}`);
+        } else {
+          Logger.log(`⚠ Event already exists: ${title}`);
+        }
+      });
+    }
+  }
+
+  SpreadsheetApp.getUi().alert("✅ Calendar event creation complete. Check View → Logs for details.");
+}
+
+// Pads single digits with a leading 0 (e.g., 4 → 04)
+function pad(n) {
+  return n.toString().padStart(2, '0');
+}
