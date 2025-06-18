@@ -1,0 +1,48 @@
+function buildFormattedExamSheets() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sourceSheetName = "Master Tracker";
+  const sourceSheet = ss.getSheetByName(sourceSheetName);
+
+  if (!sourceSheet) {
+    SpreadsheetApp.getUi().alert("❌ 'Master Tracker' sheet not found.");
+    return;
+  }
+
+  // Exam config: sheetName → columns to KEEP (1-based)
+  const examConfigs = {
+    "A+ Core 1": [1, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+    "A+ Core 2": [1, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38],
+    "Network+": [1, 40, 41, 42, 43, 44],
+    "Security+": [1, 56, 57, 58, 59, 60],
+    "CySA+": [1, 72, 73, 74, 75, 76]
+  };
+
+  const maxRows = 24;
+  const totalCols = sourceSheet.getMaxColumns();
+
+  for (let exam in examConfigs) {
+    const keepCols = examConfigs[exam];
+
+    // Delete old version if it exists
+    const existing = ss.getSheetByName(exam);
+    if (existing) ss.deleteSheet(existing);
+
+    // Duplicate the sheet
+    const newSheet = sourceSheet.copyTo(ss).setName(exam);
+
+    // Trim rows to 24 max
+    const currentRows = newSheet.getMaxRows();
+    if (currentRows > maxRows) {
+      newSheet.deleteRows(maxRows + 1, currentRows - maxRows);
+    }
+
+    // Hide columns not in the keepCols list
+    for (let col = totalCols; col >= 1; col--) {
+      if (!keepCols.includes(col)) {
+        newSheet.hideColumns(col);
+      }
+    }
+  }
+
+  SpreadsheetApp.getUi().alert("✅ Exam sheets updated (only rows 1–24 included).");
+}
