@@ -69,9 +69,9 @@ Adds a “Instructor Tools” menu with:
 
 ## Screenshots
 
-![Dashboard Preview](screenshots/Dashboard.png)
-![Dashboard Preview](screenshots/Instructor-Tools-Menu.png)
-![Dashboard Preview](screenshots/Sheet-Layout.png)
+![Dashboard Preview](Screenshots/Dashboard.png)
+![Dashboard Preview](Screenshots/Instructor-Tools-Menu.png)
+![Dashboard Preview](Screenshots/Sheet-Layout.png)
 
 
 ---
