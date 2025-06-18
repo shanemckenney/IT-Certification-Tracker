@@ -3,8 +3,6 @@ A Google Sheets + Apps Script Solution
 
 This project was developed during my time as an instructor and mentor in the **Cyber Warrior Program (CWP)** at [MyComputerCareer](https://www.mycomputercareer.edu) — a career-focused technical training institution that equips students with both the certifications *and the real-world skills* needed to succeed in IT and cybersecurity roles.
 
-The CWP is not a typical bootcamp. It’s a structured, immersive training experience built to prepare students for real-world challenges, not just exams. Students pursue certifications such as **CompTIA A+, Network+, Security+, and CySA+** while developing the practical knowledge needed to apply those skills in live environments.
-
 ---
 
 ## About This Project
